@@ -1,0 +1,17 @@
+{
+  "name": "体重記録",
+  "short_name": "体重",
+  "description": "毎日の体重を簡単に記録・管理",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#1a1a2e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

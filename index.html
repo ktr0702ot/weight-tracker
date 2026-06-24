@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>体重記録</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>⚖️ <span class="title-text">体重記録</span></h1>
+    </header>
+
+    <section class="input-section">
+      <div class="input-row">
+        <div class="input-group date-group">
+          <label>日付</label>
+          <input type="date" id="input-date">
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>体重</label>
+          <div class="input-with-unit">
+            <input type="number" id="input-weight" placeholder="68.0" step="0.1" min="0" inputmode="decimal">
+            <span class="unit">kg</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>体脂肪率</label>
+          <div class="input-with-unit">
+            <input type="number" id="input-fat" placeholder="19.0" step="0.1" min="0" max="60" inputmode="decimal">
+            <span class="unit">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group full">
+          <label>メモ</label>
+          <input type="text" id="input-memo" placeholder="自由にメモ">
+        </div>
+      </div>
+      <button id="save-btn" class="save-btn">記録する</button>
+      <div id="sync-status" class="sync-status"></div>
+    </section>
+
+    <div class="sync-section">
+      <button class="sync-toggle-btn" id="sync-toggle">⚙️ スプレッドシート連携</button>
+      <div class="sync-settings" id="sync-settings">
+        <div class="input-group">
+          <label>Google Apps Script URL</label>
+          <input type="url" id="gas-url" placeholder="デプロイしたウェブアプリのURLを貼り付け">
+        </div>
+        <div class="sync-btn-row">
+          <button id="gas-url-save" class="sync-save-btn">保存</button>
+          <button id="gas-url-clear" class="sync-clear-btn">解除</button>
+        </div>
+        <p class="sync-hint">※ 設定方法は gas-setup.txt を参照</p>
+      </div>
+    </div>
+
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="chart">📈 グラフ</button>
+      <button class="tab-btn" data-tab="list">📋 履歴</button>
+    </nav>
+
+    <main id="main-content">
+      <div id="tab-chart" class="tab-panel active">
+        <div class="chart-controls">
+          <button class="range-btn active" data-range="30">1ヶ月</button>
+          <button class="range-btn" data-range="90">3ヶ月</button>
+          <button class="range-btn" data-range="180">半年</button>
+          <button class="range-btn" data-range="365">1年</button>
+        </div>
+        <div class="chart-container">
+          <canvas id="weight-chart"></canvas>
+        </div>
+        <div class="stats-row" id="stats-row"></div>
+      </div>
+      <div id="tab-list" class="tab-panel">
+        <div id="history-list" class="history-list"></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="save-toast" class="save-toast">✓ 保存しました</div>
+
+  <div id="edit-modal" class="modal-overlay">
+    <div class="modal">
+      <h3>記録を編集</h3>
+      <div class="modal-body">
+        <div class="input-group">
+          <label>日付</label>
+          <input type="date" id="edit-date">
+        </div>
+        <div class="input-row">
+          <div class="input-group">
+            <label>体重</label>
+            <div class="input-with-unit">
+              <input type="number" id="edit-weight" step="0.1" min="0" inputmode="decimal">
+              <span class="unit">kg</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>体脂肪率</label>
+            <div class="input-with-unit">
+              <input type="number" id="edit-fat" step="0.1" min="0" max="60" inputmode="decimal">
+              <span class="unit">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>メモ</label>
+          <input type="text" id="edit-memo">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="edit-cancel" class="modal-btn cancel">キャンセル</button>
+        <button id="edit-save" class="modal-btn save">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

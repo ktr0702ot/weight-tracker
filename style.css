@@ -128,6 +128,13 @@ header h1 {
   background: var(--bg-input);
   color: var(--text-primary);
   font-size: 1rem;
+  max-width: 100%;
+}
+
+input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  text-align: center;
 }
 
 .input-section input::placeholder {
